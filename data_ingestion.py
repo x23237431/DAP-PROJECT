@@ -10,6 +10,28 @@ import json
 client = MongoClient('mongodb://dapsem1:dap_sem1@localhost:27017/admin')
 db = client['enforcement']
 
+@op
+def dataset1() -> bool:
+    file_path = "Code_Enforcement_All_Violations.csv"  # Hardcoded path to the CSV file
+    try:
+        # Connect to MongoDB
+        collection = db['all_violations']
+
+        # Load the CSV file into a Pandas DataFrame
+        df = pd.read_csv(file_path, low_memory=False)
+
+        # Convert the DataFrame to a list of dictionaries for insertion
+        data = df.to_dict(orient='records')
+
+        # Insert the data into MongoDB
+        collection.insert_many(data)
+
+        # Return True if the data insertion is successful
+        return True
+
+    except ( pd.errors.ParserError, Exception ) as e:
+        # Return False if any exception occurs
+        return False
 
 @op
 def dataset2() -> bool:
