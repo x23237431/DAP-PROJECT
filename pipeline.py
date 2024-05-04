@@ -28,7 +28,7 @@ def getting_mongo_data(context: OpExecutionContext,  dataset1, dataset2 , datase
         all_cases = list(db["all_cases"].find())
         context.log.info("Fetched and converted enforcement data.")
 
-        # Retrieve and convert data from "occupancy" collection
+        # Retrieve and convert data from  collection
         all_violations_df = pd.DataFrame(all_violations)
         all_inspections_df = pd.DataFrame(all_inspections)
         all_cases_df = pd.DataFrame(all_cases)
